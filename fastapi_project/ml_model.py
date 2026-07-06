@@ -8,7 +8,6 @@ import reflex as rx
 _MODEL = None
 
 def load_model():
-    """Загружает модель из assets/ с проверкой наличия файла"""
     global _MODEL
     if _MODEL is not None:
         return _MODEL
@@ -24,44 +23,22 @@ def load_model():
     rx.logger.info(f"Модель успешно загружена из {model_path}")
     return _MODEL
 
+def preprocess(df):
+    print(df.columns)
+    return df
+
 def predict(features: dict) -> dict:
-    """
-    Принимает словарь с признаками, возвращает результат предсказания.
-    
-    Args:
-        features: {
-            'age': 30,
-            'gender': 'male',
-            'salary': 50000,
-            'education': 'higher'
-        }
-    
-    Returns:
-        {
-            'score': 0.85,
-            'prediction': 'approved',
-            'probability': 0.92
-        }
-    """
     model = load_model()
     
-    # 1. Преобразуем входные данные в DataFrame
-    # (Здесь зависит от твоей модели - может потребоваться one-hot encoding)
-    df = pd.DataFrame([features])
+    df = pd.DataFrame([features], columns = ['Name', 'email', 'gender', 'age', 'property', 'car'])
     
-    # 2. Предобработка (если нужно)
-    # Например: df = preprocess(df)
+    df = preprocess(df)
     
-    # 3. Предсказание
     try:
-        # Вариант 1: Если модель возвращает вероятность
-        probability = model.predict_proba(df)[0][1]  # Для бинарной классификации
+        probability = model.predict(df)[0]
         score = float(probability)
         prediction = "approved" if score >= 0.5 else "rejected"
-        
-        # Вариант 2: Если просто predict
-        # prediction = model.predict(df)[0]
-        # score = float(model.predict_proba(df)[0][1])
+
         
         return {
             'score': round(score, 4),

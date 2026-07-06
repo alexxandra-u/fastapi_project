@@ -6,6 +6,107 @@ import random
 from rxconfig import config
 
 
+def application_form() -> rx.Component:
+    """Форма подачи заявки на кредитную карту."""
+    return rx.form(
+        rx.vstack(
+            rx.heading("Fill the form", size="5"),
+            
+            # Имя
+            rx.text("Name", size="3", font_weight="bold"),
+            rx.input(
+                placeholder="Enter your name",
+                name="name", 
+                required=True,
+            ),
+            
+            # Email
+            rx.text("Email", size="3", font_weight="bold"),
+            rx.input(
+                placeholder="Enter your email",
+                name="email",
+                type="email",
+                required=True,
+            ),
+            
+            # Пол
+            rx.text("Gender", size="3", font_weight="bold"),
+            rx.select(
+                ["Male", "Female", "Other"], 
+                placeholder="Select gender",
+                name="gender",
+                required=True,
+            ),
+            
+            # Возраст
+            rx.text("Age", size="3", font_weight="bold"),
+            rx.input(
+                placeholder="Enter your age",
+                name="age",
+                type="number",
+            ),
+            
+            # Собственность
+            rx.text("Do you own any property?", size="3", font_weight="bold"),
+            rx.select(
+                ["Yes", "No"], 
+                placeholder="Select option",
+                name="property",
+                required=True,
+            ),
+            
+            # Автомобиль
+            rx.text("Do you own a car?", size="3", font_weight="bold"),
+            rx.select(
+                ["Yes", "No"],  
+                placeholder="Select option",
+                name="car",
+                required=True,
+            ),
+            
+            rx.button(
+                "Send application",
+                type="submit",
+                width="100%",
+                background="#7ECEA7",
+                color="white",
+                _hover={
+                    "transform": "scale(1.02)",
+                    "box_shadow": "0 10px 20px rgba(0,0,0,0.2)",
+                }
+            ),
+            rx.cond(
+                State.show_result,
+                rx.vstack(
+                    rx.divider(),
+                    rx.text(
+                        f"Probability of credit card approval: {State.random_number}%",
+                        size="6",
+                        color="white",
+                        font_weight="bold",
+                    ),
+                    rx.text(
+                        "Thank you for your application!",
+                        size="4",
+                        color="white",
+                    ),
+                    spacing="2",
+                    width="100%",
+                    padding="10px",
+                    bg="rgba(0,0,0,0.7)",
+                    border_radius="10px",
+                ),
+                rx.box(), 
+            ),
+            spacing="4",
+            width="100%",
+        ),
+        on_submit=State.handle_submit,
+        width="100%",
+        max_width="400px",
+    )
+
+
 class State(rx.State):
 
     random_number: int = 0
@@ -23,131 +124,37 @@ class State(rx.State):
         print(f"Получена заявка: {name}, {email}")
 
         self.random_number = random.randint(0, 100)
-        self.show_result = True  # Показываем результат
+        self.show_result = True
 
 
-
-def index() -> rx.Component:
-    return rx.container(
-        rx.color_mode.button(position="top-right"),
-        rx.hstack(
-            rx.box(
-                rx.image(
-                    src="/card.jpg",
-                    alt="Credit Card",
-                    width="100%", 
-                    # max_width="450px",
-                    height="auto",
-                ),
-                padding="20px",
-                flex="1",
-                display="flex",
-                justify_content="center",
-                align_items="center",
-                flex_shrink="0",
+def index():
+    return rx.hstack(
+        rx.box(
+            rx.image(
+                src="/card.jpg",
+                alt="Credit Card",
+                width="100%", 
+                height="auto",
             ),
+            width="35%",
+        ),
+        rx.box(
             rx.vstack(
                 rx.heading("Credit card application", size="9"),
-                rx.text(
-                    "Get a free credit card from our VeryImportant Bank (VIB)",
-                    size="5",
-                ),
-                rx.form(
-                    rx.vstack(
-                        rx.heading("Fill the form", size="5"),
-                        rx.input(placeholder="Name", name="name", required=True),
-                        rx.input(
-                            placeholder="Email",
-                            name="email",
-                            type="email",
-                            required=True,
-                        ),
-                        rx.select(
-                            ["Male", "Female", 'Other'], 
-                            placeholder="Gender",
-                            name="gender",
-                            required=True,
-                        ),
-                        rx.input(
-                            placeholder="Age",
-                            name="age",
-                            type="number",
-                        ),
-                        rx.select(
-                            ["Yes", "No"], 
-                            placeholder="Do you own any property?",
-                            name="property",
-                            required=True,
-                        ),
-                        rx.select(
-                            ["Yes", "No"],  
-                            placeholder="Do you own a car?",
-                            name="car",
-                            required=True,
-                        ),
-                        rx.button(
-                            "Send application",
-                            type="submit",
-                            width="100%",
-                            background="#7ECEA7",
-                            color="white",
-                            _hover={
-                                "transform": "scale(1.02)",
-                                "box_shadow": "0 10px 20px rgba(0,0,0,0.2)",
-                            }
-                        ),
-                        rx.cond(
-                            State.show_result,
-                            rx.vstack(
-                                rx.divider(),
-                                rx.text(
-                                    f"Probability of credit card approval: {State.random_number}%",
-                                    size="6",
-                                    color="white",
-                                    font_weight="bold",
-                                ),
-                                rx.text(
-                                    "Thank you for your application!",
-                                    size="4",
-                                    color="white",
-                                ),
-                                spacing="2",
-                                width="100%",
-                                padding="10px",
-                                bg="rgba(0,0,0,0.7)",
-                                border_radius="10px",
-                            ),
-                            rx.box(), 
-                        ),
-                        spacing="4",
-                        width="100%",
-                    ),
-                    on_submit=State.handle_submit,
-                    width="100%",
-                    max_width="400px",
-                ),
-                spacing="5",
-                justify="center",
-                flex='1',
-                align="center",
+                rx.text("Get a free credit card from our VeryImportant Bank (VIB)",size="5",),
+                application_form(),
             ),
-            spacing="8",
-            justify="between",
-            align="center",
-            min_height="85vh",
-            flex_wrap="wrap",
+            width="65%",
+            padding = '70px',
+            padding_top = '70px',
         ),
         style={
             "background_image": "url('/font.jpg')",
             "background_size": "cover",
-            "background_position": "center",
-            "background_repeat": "no-repeat",
-            "min_height": "100vh",
-        }
+        },
+        width="100%",
+        spacing="0",
     )
-
-
-
 
 app = rx.App()
 app.add_page(index)
