@@ -4,6 +4,7 @@ import reflex as rx
 import random
 
 from rxconfig import config
+from .ml_model import predict
 
 
 def application_form() -> rx.Component:
@@ -218,29 +219,63 @@ class State(rx.State):
 
     def handle_submit(self, form_data: dict):
         """Обработчик отправки формы."""
-        name = form_data.get("name")
-        email = form_data.get("email")
-        gender = form_data.get("gender")
-        age = form_data.get("age")
-        date_of_bitrh = form_data.get("date_of_birth") 
-        mob_phone = form_data.get("mob_phone") 
-        work_phone = form_data.get("work_phone") 
-        property = form_data.get("property")
-        car = form_data.get("car")
-        education = form_data.get("education")
-        income_type = form_data.get("income_type")
-        income_amount = form_data.get("income_amount")
-        date_of_emp = form_data.get("date_of_emp")
-        occupation = form_data.get("occupation")
-        marital_status = form_data.get("marital_status")
-        children = form_data.get("children")
-        family = form_data.get("fam")
-        housing = form_data.get("housing")
+        # name = form_data.get("name")
+        # email = form_data.get("email")
+        # gender = form_data.get("gender")
+        # age = form_data.get("age")
+        # date_of_bitrh = form_data.get("date_of_birth") 
+        # mob_phone = form_data.get("mob_phone") 
+        # work_phone = form_data.get("work_phone") 
+        # property = form_data.get("property")
+        # car = form_data.get("car")
+        # education = form_data.get("education")
+        # income_type = form_data.get("income_type")
+        # income_amount = form_data.get("income_amount")
+        # date_of_emp = form_data.get("date_of_emp")
+        # occupation = form_data.get("occupation")
+        # marital_status = form_data.get("marital_status")
+        # children = form_data.get("children")
+        # family = form_data.get("fam")
+        # housing = form_data.get("housing")
+
+
+        features = {
+            'name': form_data.get("name"),
+            'email': form_data.get("email"),
+            'gender': form_data.get("gender"),
+            'age': int(form_data.get("age")) if form_data.get("age") else None,
+            'date_of_birth': form_data.get("date_of_birth"),
+            'mob_phone': form_data.get("mob_phone"),
+            'work_phone': form_data.get("work_phone"),
+            'property': form_data.get("property"),
+            'car': form_data.get("car"),
+            'education': form_data.get("education"),
+            'income_type': form_data.get("income_type"),
+            'income_amount': float(form_data.get("income_amount")) if form_data.get("income_amount") else None,
+            'date_of_emp': form_data.get("date_of_emp"),
+            'occupation': form_data.get("occupation"),
+            'marital_status': form_data.get("marital_status"),
+            'children': int(form_data.get("children")) if form_data.get("children") else None,
+            'family': form_data.get("fam"),
+            'housing': form_data.get("housing"),
+        }
+
+        print(features)
+
+        # features = {
+        #         'age': int(self.age),
+        #         'gender': self.gender,
+        #         'salary': float(self.salary),
+        #         'education': self.education
+        #     }
         
-        print(f"Получена заявка: {name}, {email}")
+        print(f"Получена заявка: {form_data.get("name")}, {form_data.get("email")}")
 
         self.random_number = random.randint(0, 100)
         self.show_result = True
+
+        prediction = predict(features)
+        print('Pred is:', prediction)
 
 
 def index():
