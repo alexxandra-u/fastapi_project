@@ -24,7 +24,14 @@ def load_model():
     return _MODEL
 
 def preprocess(df):
-    print(df.columns)
+    df['CODE_GENDER'] = df['gender'].replace({'Male': 'M', 'Female': 'F'})
+    df['FLAG_OWN_CAR'] = df['car'].replace({'Yes': 'Y', 'No': 'N'})
+    df['FLAG_OWN_REALTY'] = df['property'].replace({'Yes': 'Y', 'No': 'N'})
+    df['FLAG_MOBIL'] = df['mob_phone'].notnull()
+    df['FLAG_WORK_PHONE'] = df['work_phone'].notnull()
+    df['FLAG_PHONE'] = df['FLAG_MOBIL'] | df['FLAG_WORK_PHONE']
+    # df['DAYS_BIRTH'] = 
+    # df['DAYS_EMPLOYED'] = 
     return df
 
 def predict(features: dict) -> dict:

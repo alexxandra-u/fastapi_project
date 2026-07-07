@@ -45,6 +45,110 @@ def application_form() -> rx.Component:
                 name="age",
                 type="number",
             ),
+
+            # День рождения
+            rx.text("Date of Birth", size="3", font_weight="bold"),
+            rx.input(
+                placeholder="Enter your date of birth",
+                name="date_of_birth",
+                type="date",
+            ),
+
+            # Номер телефона
+            rx.text("Mobile Phone Number", size="3", font_weight="bold"),
+            rx.input(
+                placeholder="+7 (XXX) XXX-XX-XX",
+                name="mob_phone",
+                type="tel",
+                pattern="[0-9+\-\s()]{10,20}",
+                required=True,
+            ),
+
+            # Рабочий номер телефона
+            rx.text("Work Phone Number", size="3", font_weight="bold"),
+            rx.input(
+                placeholder="+7 (XXX) XXX-XX-XX",
+                name="work_phone",
+                type="tel",
+                pattern="[0-9+\-\s()]{10,20}", 
+                required=False,
+            ),
+
+            # Образование
+            rx.text("Choose your education level", size="3", font_weight="bold"),
+            rx.select(
+                ['Higher education', 'Secondary / secondary special','Incomplete higher','Lower secondary','Academic degree'],
+                placeholder="Select option",
+                name="education",
+                required=True,
+            ),
+
+            # Тип дохода
+            rx.text("What is your income type?", size="3", font_weight="bold"),
+            rx.select(
+                ['Working', 'Commercial associate', 'Pensioner', 'State servant', 'Student', 'Other'],
+                placeholder="Select option",
+                name="income_type",
+                required=True,
+            ),
+
+            # Доход
+            rx.text("Annual income amount", size="3", font_weight="bold"),
+            rx.input(
+                placeholder="Enter your income amount",
+                name="income_amount",
+                type="number",
+            ),
+
+            rx.text("Date of Employment start", size="3", font_weight="bold"),
+            rx.input(
+                placeholder="Enter your date of employment start",
+                name="date_of_emp",
+                type="date",
+            ),
+
+            # Род деятельности
+            rx.text("What is your occupation type?", size="3", font_weight="bold"),
+            rx.select(
+                ['Unknown','Security staff','Sales staff','Accountants','Laborers','Managers','Drivers','Core staff', 'High skill tech staff','Cleaning staff', 'Private service staff','Cooking staff','Low-skill Laborers','Medicine staff','Secretaries','Waiters/barmen staff','HR staff','Realty agents', 'IT staff'],
+                placeholder="Select option",
+                name="occupation",
+                required=True,
+            ),
+
+            # Семейный статус
+            rx.text("What is your marital status?", size="3", font_weight="bold"),
+            rx.select(
+                ['Civil marriage', 'Married', 'Single / not married', 'Separated', 'Widow'],
+                placeholder="Select option",
+                name="marital_status",
+                required=True,
+            ),
+
+            # Количество детей
+            rx.text("Number of family members", size="3", font_weight="bold"),
+            rx.input(
+                placeholder="Enter the number of family members",
+                name="fam",
+                type="number",
+            ),
+
+            # Количество детей
+            rx.text("Number of children", size="3", font_weight="bold"),
+            rx.input(
+                placeholder="Enter the number of children",
+                name="children",
+                type="number",
+            ),
+
+            # Жилье
+            rx.text("What is your housing type?", size="3", font_weight="bold"),
+            rx.select(
+                ['Rented apartment','House / apartment','Municipal apartment','With parents','Co-op apartment','Office apartment', 'Other'],
+                placeholder="Select option",
+                name="housing",
+                required=True,
+            ),
             
             # Собственность
             rx.text("Do you own any property?", size="3", font_weight="bold"),
@@ -118,8 +222,20 @@ class State(rx.State):
         email = form_data.get("email")
         gender = form_data.get("gender")
         age = form_data.get("age")
+        date_of_bitrh = form_data.get("date_of_birth") 
+        mob_phone = form_data.get("mob_phone") 
+        work_phone = form_data.get("work_phone") 
         property = form_data.get("property")
         car = form_data.get("car")
+        education = form_data.get("education")
+        income_type = form_data.get("income_type")
+        income_amount = form_data.get("income_amount")
+        date_of_emp = form_data.get("date_of_emp")
+        occupation = form_data.get("occupation")
+        marital_status = form_data.get("marital_status")
+        children = form_data.get("children")
+        family = form_data.get("fam")
+        housing = form_data.get("housing")
         
         print(f"Получена заявка: {name}, {email}")
 
