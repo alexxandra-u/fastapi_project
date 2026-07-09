@@ -250,7 +250,7 @@ def application_form() -> rx.Component:
                     spacing="2",
                     width="80%",
                     padding="10px",
-                    bg="rgba(0,0,0,0.7)",
+                    bg="rgba(0,0,0,0.65)",
                     border_radius="10px",
                 ),
                 rx.box(), 
