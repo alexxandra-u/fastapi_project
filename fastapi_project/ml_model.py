@@ -46,19 +46,15 @@ def preprocess(df):
 def predict(features: dict) -> dict:
     model = load_model()
     
-    names = ["name", "email", "gender", "age", "date_of_birth", "mob_phone", "work_phone", "property", "car", "education", "income_type", "income_amount", "date_of_emp", "occupation", "marital_status", "children", "family", "housing"]
+    names = ["name", "email", "gender", "date_of_birth", "mob_phone", "work_phone", "property", "car", "education", "income_type", "income_amount", "date_of_emp", "occupation", "marital_status", "children", "family", "housing"]
     print(len(features), len(names))
     df = pd.DataFrame([features], columns = names)
 
-    print('here 1')
     df = preprocess(df)
 
-    print('here 2')
     cat_features = ['CODE_GENDER','FLAG_OWN_CAR','FLAG_OWN_REALTY','NAME_INCOME_TYPE','NAME_EDUCATION_TYPE','NAME_FAMILY_STATUS','NAME_HOUSING_TYPE','OCCUPATION_TYPE']
     for feat in cat_features:
         df[feat] = df[feat].astype('category')
-
-    print('here 3')
 
     try:
         probability = model.predict_proba(df[model.feature_names_in_])[0][0]
