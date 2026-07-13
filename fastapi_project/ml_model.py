@@ -31,8 +31,8 @@ def preprocess(df):
     df['FLAG_WORK_PHONE'] = df['work_phone'].notnull()
     df['FLAG_PHONE'] = df['FLAG_MOBIL'] | df['FLAG_WORK_PHONE']
     df['FLAG_EMAIL'] = df['email'].notnull()
-    df['DAYS_BIRTH'] = (pd.Timestamp.now() - pd.to_datetime(df['date_of_birth'])).dt.days
-    df['DAYS_EMPLOYED'] = (pd.Timestamp.now() - pd.to_datetime(df['date_of_emp'])).dt.days
+    df['AGE'] = (pd.Timestamp.now() - pd.to_datetime(df['date_of_birth'])).dt.days / 365
+    df['YEARS_EMPLOYED'] = (pd.Timestamp.now() - pd.to_datetime(df['date_of_emp'])).dt.days / 365
     df['CNT_CHILDREN'] = df['children']
     df['AMT_INCOME_TOTAL'] = df['income_amount']
     df['NAME_INCOME_TYPE'] = df['income_type']
