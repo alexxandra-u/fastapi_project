@@ -367,10 +367,10 @@ class State(rx.State):
         self.show_result = False
         self.result = {}
         self.error_message = ""
-        self.is_loading = False
+        # self.is_loading = False
 
     def calc_pred(self, form_data: dict) -> dict:
-        self.is_loading = True
+        # self.is_loading = True
         features = {
             'name': form_data.get("name", ""),
             'email': form_data.get("email", ""),
@@ -395,7 +395,7 @@ class State(rx.State):
         print('Pred is:', prediction)
 
         self.prediction = prediction['score']
-        self.is_loading = False
+        # self.is_loading = False
         self.show_result = True
 
 def index():
